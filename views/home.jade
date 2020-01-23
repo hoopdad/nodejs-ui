@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Bank of Future
+  body
+    h1 This is Home Page
+    button(type='button', onclick='user()') User
+    button(type='button', onclick='admin()') Admin
+    button(type='button', onclick='findBranches()') Find Branches
+    script.
+      const findBranches = async () => {
+      window.location.href = '/findbranches'
+      }
+      const user = async () => {
+      window.location.href = '/'
+      }
+      const admin = async () => {
+      window.location.href = '/getbranches'
+      }

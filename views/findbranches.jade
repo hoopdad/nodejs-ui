@@ -1,0 +1,76 @@
+doctype html
+html
+  head
+    title Bank of Future
+    link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+  body
+    nav.navigation-bar
+      h1.header1 Bank of Future
+    hr.new4
+    #container
+      #left
+        .verticalmenu
+          a(onclick='home()', href='/user') Home
+          a.active(onclick='findBranches()', href='/findbranches') Find Branches
+          a(href='#') About
+          a(href='#') Contact Us
+        .logoutbtn
+          a(href='/') Log Out
+      #middle
+        #centerpart
+          h2 Search for branches with Zip Code
+          p Zip Code:
+          input#zipcode(type='text', placeholder='Search..')
+          br
+          br
+          button.button(onclick='searchBranch()') Search
+          button.button(onclick='back()') Back
+          #centerpart
+            #dvTable
+      #right
+        .rightbar
+          //- p.rightp Add Description here
+          h2 Description
+          hr.new4
+          p.rightp This is search page for User to find branches by using branch zip code.
+    script.
+      const searchBranch = async () => {
+      var zipcode = document.getElementById("zipcode").value
+      var url = 'http://nodejs-api-oh-proj1.apps.cluster.infosysadmcoe.com/branch/' + zipcode
+      console.log(url)
+      const response = await fetch(url);
+      const myjson = await response.json();
+      console.log(myjson);
+      //Create a HTML Table element.
+      var table = document.createElement("TABLE");
+      table.setAttribute("id", "mytable");
+      table.border = "1";
+      var headers = new Array();
+      headers.push(["Name", "Zip Code", "Address", "Working Days", "Working Hours", "Description", "Last Modified Date Time", "State"]);
+      for (i = 0; i < myjson.length; i++) {
+      headers.push([myjson[i].branchname, myjson[i].zipcode, myjson[i].address, myjson[i].workingdays, myjson[i].workinghours, myjson[i].description, myjson[i].lastmodifieddtm, myjson[i].State])
+      }
+      //Get the count of columns.
+      var columnCount = headers[0].length;
+      //Add the header row.
+      var row = table.insertRow(-1);
+      for (var i = 0; i < columnCount; i++) {
+      var headerCell = document.createElement("TH");
+      headerCell.innerHTML = headers[0][i];
+      row.appendChild(headerCell);
+      }
+      //Add the data rows.
+      for (var i = 1; i < headers.length; i++) {
+      row = table.insertRow(-1);
+      for (var j = 0; j < columnCount; j++) {
+      var cell = row.insertCell(-1);
+      cell.innerHTML = headers[i][j];
+      }
+      }
+      var dvTable = document.getElementById("dvTable");
+      dvTable.innerHTML = "";
+      dvTable.appendChild(table);
+      }
+      const back = async () => {
+      window.location.href = '/user'
+      }

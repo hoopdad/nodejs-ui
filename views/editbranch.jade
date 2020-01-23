@@ -1,0 +1,103 @@
+doctype html
+html
+  head
+    title Bank of Future
+    link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+  body(onload='myfunc()')
+    nav.navigation-bar
+      h1.header1 Bank of Future
+    hr.new4
+    #container
+      #left
+        .verticalmenu
+          a(onclick='home()', href='/admin') Home
+          a.active(onclick='editbranches()', href='/editpage') Edit Branches
+          a(href='#') About
+          a(href='#') Contact Us
+        .logoutbtn
+          a(href='/') Log Out
+      #middle
+        #centerpart
+          .div1
+            label.mylabel Name
+            input#name.w3-input(type='text', name='name', disabled='')
+            br
+            br
+            label.mylabel Zip Code
+            input#zipcode.w3-input(type='text', name='zipcode')
+            br
+            br
+            label.mylabel Address
+            input#address.w3-input(type='text', name='address')
+            br
+            br
+            label.mylabel Working Days
+            input#workingdays.w3-input(type='text', name='workingdays')
+            br
+            br
+          .div2
+            label.mylabel Working Hours
+            input#workinghours.w3-input(type='text', name='workinghours')
+            br
+            br
+            label.mylabel Description
+            input#description.w3-input(type='text', name='description')
+            br
+            br
+            label.mylabel Last Modified Date Time
+            input#lastmodifieddtm.w3-input(type='text', name='lastmodifieddtm')
+            br
+            br
+            label.mylabel State
+            input#state.w3-input(type='text', name='state')
+            br
+            br
+          button.button(onclick='submit()') Submit
+          button.button(onclick='cancel()') Cancel
+      #right
+        .rightbar
+          h2 Description
+          hr.new4
+          p.rightp This is Edit screen for Admin to update branch details.
+    script.
+      const myfunc = async () => {
+      var mydata = window.sessionStorage.getItem("tabledata");
+      console.log(mydata)
+      var temp = JSON.parse(mydata)
+      console.log(temp["5"])
+      document.getElementById("name").setAttribute("value", temp["1"])
+      document.getElementById("zipcode").setAttribute("value", temp["2"])
+      document.getElementById("address").setAttribute("value", temp["3"])
+      document.getElementById("workingdays").setAttribute("value", temp["4"])
+      document.getElementById("workinghours").setAttribute("value", temp["5"])
+      document.getElementById("description").setAttribute("value", temp["6"])
+      document.getElementById("lastmodifieddtm").setAttribute("value", temp["7"])
+      document.getElementById("state").setAttribute("value", temp["8"])
+      }
+      const submit = async () => {
+      var mydata = window.sessionStorage.getItem("tabledata");
+      console.log(mydata)
+      var temp = JSON.parse(mydata)
+      var text = 'hello' + temp["5"]
+      console.log(text)
+      var jsontext1 = 'branchname=' + document.getElementById("name").value + '&' +
+      'zipcode=' + document.getElementById("zipcode").value + '&' +
+      'address=' + document.getElementById("address").value + '&' +
+      'workingdays=' + document.getElementById("workingdays").value + '&' +
+      'workinghours=' + document.getElementById("workinghours").value + '&' +
+      'description=' + document.getElementById("description").value + '&' +
+      'lastmodifieddtm=' + document.getElementById("lastmodifieddtm").value + '&' +
+      'State=' + document.getElementById("state").value + '&';
+      console.log("test---> " + document.getElementById("state").value)
+      fetch('http://nodejs-api-oh-proj1.apps.cluster.infosysadmcoe.com/branch/', {
+      method: 'put',
+      body: jsontext1,
+      headers: {
+      'Content-type': 'application/x-www-form-urlencoded'
+      }
+      })
+      window.location.href = '/editpage'
+      }
+      const cancel = async () => {
+      window.location.href = '/admin'
+      }

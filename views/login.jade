@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Bank of Future
+    link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+  body
+    nav.navigation-bar
+      h1.header1 Bank of Future
+    hr.new4
+    .loginas
+      h2.header2 Please Login with appropriate role
+      select#dropdown.dropdown(onchange='login()')
+        option(value='', disabled='disabled', selected='selected') Select
+        option(value='1') User
+        option(value='2') Admin
+    script.
+      const login = async () => {
+      var e = document.getElementById("dropdown");
+      var str = e.options[e.selectedIndex].text;
+      console.log(str)
+      if (str == "User") {
+      window.location.href = '/user'
+      } else {
+      window.location.href = '/admin'
+      }
+      } 

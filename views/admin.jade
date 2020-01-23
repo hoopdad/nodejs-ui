@@ -1,0 +1,85 @@
+doctype html
+html
+  head
+    title Bank of Future
+    link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+  body
+    nav.navigation-bar
+      h1.header1 Bank of Future
+    hr.new4
+    #container
+      #left
+        .verticalmenu
+          a.active(onclick='home()', href='/admin') Home
+          a(onclick='editbranches()', href='/editpage') Edit Branches
+          a(href='#') About
+          a(href='#') Contact Us
+        .logoutbtn
+          a(href='/') Log Out
+      #middle
+        #centerpart
+          p.centerp Welcome Admin to the Bank of Future. Please select Edit branches to get list of branches and edit them.
+      #right
+        .rightbar
+          //- p.rightp Add Description here
+          h2 Description
+          hr.new4
+          p.rightp This is Home screen for Admin. Navigate to edit branches for modifying branch details.
+    script.
+      const branches = async () => {
+      const response = await fetch('http://nodejs-api-oh-proj1.apps.cluster.infosysadmcoe.com/branches');
+      const myjson = await response.json();
+      console.log(myjson);
+      var headers = new Array();
+      headers.push(["Name", "Zip Code", "Address", "Working Days", "Working Hours", "Description", "Last Modified Date Time", "State", ""]);
+      for (i = 0; i < myjson.length; i++) {
+      headers.push([myjson[i].branchname, myjson[i].zipcode, myjson[i].address, myjson[i].workingdays, myjson[i].workinghours, myjson[i].description, myjson[i].lastmodifieddtm, myjson[i].State])
+      }
+      //Create a HTML Table element.
+      var table = document.createElement("TABLE");
+      table.setAttribute("id", "mytable");
+      table.border = "1";
+      //Get the count of columns.
+      var columnCount = headers[0].length;
+      //Add the header row.
+      var row = table.insertRow(-1);
+      for (var i = 0; i < columnCount; i++) {
+      var headerCell = document.createElement("TH");
+      headerCell.innerHTML = headers[0][i];
+      row.appendChild(headerCell);
+      }
+      //Add the data rows.
+      for (var i = 1; i < headers.length; i++) {
+      row = table.insertRow(-1);
+      for (var j = 0; j < columnCount; j++) {
+      var cell = row.insertCell(-1);
+      cell.innerHTML = headers[i][j];
+      }
+      var lastRow = row;
+      var lastCell = lastRow.cells[lastRow.cells.length - 1];
+      var mybtn = '<button id="' + i + '" onclick=edit(this.id)>Edit</button>';
+      console.log(mybtn)
+      lastCell.innerHTML = mybtn;
+      }
+      var dvTable = document.getElementById("dvTable");
+      dvTable.innerHTML = "";
+      dvTable.appendChild(table);
+      }
+      const edit = async (id) => {
+      console.log(id)
+      var table = document.getElementById('mytable');
+      var obj = {};
+      for (var c = 0, m = table.rows[id].cells.length; c < m; c++) {
+      var mydata = table.rows[id].cells[c]
+      console.log(table.rows[id].cells[c].innerText)
+      obj[c] = table.rows[id].cells[c].innerText
+      }
+      console.log(obj);
+      var mydata = JSON.stringify(obj);
+      window.sessionStorage.setItem('tabledata', mydata);
+      // localStorage.setItem("tabledata", obj);
+      window.location.href = '/editbranch'
+      }
+      const back = async () => {
+      window.location.href = '/'
+      }

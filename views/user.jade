@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    title Bank of Future
+    link(rel='stylesheet', type='text/css', href='stylesheets/style.css')
+  body
+    nav.navigation-bar
+      h1.header1 Bank of Future
+    hr.new4
+    #container
+      #left
+        .verticalmenu
+          a.active(onclick='home()', href='/user') Home
+          a(onclick='findBranches()', href='/findbranches') Find Branches
+          a(href='#') About
+          a(href='#') Contact Us
+        .logoutbtn
+          a(href='/') Log Out
+      #middle
+        #centerpart
+          p.centerp Welcome User to the Bank of Future. Please select Find branches to search for branches using zip code.
+      #right
+        .rightbar
+          //- p.rightp Add Description here
+          h2 Description
+          hr.new4
+          p.rightp This is Home screen for user. Navigate to find branches to search for branches.
+    script.
+      const findBranches = async () => {
+      window.location.href = '/findbranches'
+      }
+      const home = async () => {
+      window.location.href = '/user'
+      }
+      const logout = async () => {
+      window.location.href = '/'
+      }
