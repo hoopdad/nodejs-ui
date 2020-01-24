@@ -26,7 +26,7 @@ html
           p.rightp This is the edit page for Admin to modify branch details.
     script.
       const branches = async () => {
-      const response = await fetch('http://nodejs-api-oh-proj1.apps.cluster.infosysadmcoe.com/branches');
+      const response = await fetch('http://nodejs-api-oh-proj1.apps.ocp4.ocp4lab.com/branches');
       const myjson = await response.json();
       console.log(myjson);
       var headers = new Array();

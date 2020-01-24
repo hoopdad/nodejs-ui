@@ -89,7 +89,7 @@ html
       'lastmodifieddtm=' + document.getElementById("lastmodifieddtm").value + '&' +
       'State=' + document.getElementById("state").value + '&';
       console.log("test---> " + document.getElementById("state").value)
-      fetch('http://nodejs-api-oh-proj1.apps.cluster.infosysadmcoe.com/branch/', {
+      fetch('http://nodejs-api-oh-proj1-bankofthefuturedemo.apps.ocp4.ocp4lab.com/branch', {
       method: 'put',
       body: jsontext1,
       headers: {
