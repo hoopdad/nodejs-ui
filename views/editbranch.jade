@@ -95,7 +95,13 @@ html
       headers: {
       'Content-type': 'application/x-www-form-urlencoded'
       }
-      })
+      }).catch( err => {
+            err.text().then( errorMessage => {
+                console.log(errorMessage)
+            })
+        })
+  
+  
       window.location.href = '/editpage'
       }
       const cancel = async () => {
